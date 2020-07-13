@@ -1,0 +1,20 @@
+---
+# tasks file for docker
+
+- name: Install prereq
+  yum:
+    name: yum-utils
+    state: latest
+
+- name: Add docker repo
+  shell: yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
+
+- name: Install Docker
+  yum:
+    name: "{{ docker_rpm }}"
+
+- name: Start Docker
+  systemd:
+    state: started
+    name: docker
+ 

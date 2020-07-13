@@ -1,0 +1,26 @@
+---
+# tasks file for myapp
+
+- name: Deploy webpage
+  copy:
+    src: index.html
+    dest: /var/www/html
+    owner: apache
+    group: apache
+    mode: '0644'
+ 
+- name: Enable FW
+  firewalld:
+    zone: public
+    service: "{{ item }}"
+    permanent: yes
+    state: enabled
+  loop:
+    - https
+    - http
+
+- name: Start firewalld
+  systemd:
+    state: restarted
+    name: firewalld
+

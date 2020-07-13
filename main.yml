@@ -1,0 +1,24 @@
+---
+- name: Install docker
+  hosts: docker
+  become: yes
+  vars_files:
+    - vars/all_vars.yml
+  roles:
+  - docker
+
+- name: Install http
+  hosts: web
+  become: yes
+  vars_files:
+    - vars/all_vars.yml
+  roles:
+  - http
+
+- name: deploy app
+  hosts: web
+  become: yes
+  vars_files:
+    - vars/all_vars.yml
+  roles:
+  - myapp
